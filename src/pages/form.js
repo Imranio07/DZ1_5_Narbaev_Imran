@@ -12,7 +12,7 @@ function CreatePost() {
     const postData = {
       title: title,
       body: body,
-      userId: 1, // Указываем userId (1 - пример)
+      userId: 1,
     };
 
     try {
