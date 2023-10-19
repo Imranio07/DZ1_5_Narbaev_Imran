@@ -1,11 +1,37 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function CreatePost() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setBody("");
+
+    const postData = {
+      title: title,
+      body: body,
+      userId: 1, // Указываем userId (1 - пример)
+    };
+
+    try {
+      const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(postData),
+      });
+
+      if (response.ok) {
+        navigate("/posts");
+      } else {
+        console.error("Ошибка при создании поста");
+      }
+    } catch (error) {
+      console.error("Ошибка при отправке запроса на сервер: ", error);
+    }
   };
 
   return (
